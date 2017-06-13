@@ -2,23 +2,23 @@ var restify = require('restify');
 var builder = require('botbuilder');
 
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3000, function () {
+server.listen(process.env.port || process.env.PORT || 3500, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
   
-// Create chat bot
 var connector = new builder.ChatConnector({
-    appId:'',
-    appPassword:''
-});
+    appId:'38672d76-b7e2-4779-b20b-1abca59d13e9',
+    appPassword:'iV9CBk64dLpBoJey9hWrqLj'
+	});
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+
+server.post('/api/messages', connector.listen()); 
 
 bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i }));
 
 bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
 bot.beginDialogAction('help', '/help', { matches: /^help/i });
-//default
+
 bot.dialog('/', [
 
     function (session) {
